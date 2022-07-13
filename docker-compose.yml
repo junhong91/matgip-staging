@@ -1,0 +1,33 @@
+# https://wkrzywiec.medium.com/how-to-run-database-backend-and-frontend-in-a-single-click-with-docker-compose-4bcda66f6de
+version: "3"
+services:
+  matgip-redis:
+    image: "redis:latest"
+    container_name: matgip-redis
+    ports:
+      - 6379:6379
+
+  # matgip-frontend:
+  #   build: ./frontend
+  #   container_name: matgip-frontend
+
+  # matgip-backend:
+  #   build: ./backend
+  #   container_name: matgip-backend
+  #   ports:
+  #     - 3000:3000
+  #   environment:
+  #     - REDIS_HOST=matgip-redis
+  #   links:
+  #     - matgip-redis
+  #     - matgip-frontend
+
+  matgip-service:
+    image: "junhong1991/matgip:1.0.0"
+    container_name: matgip-service
+    ports:
+      - 3000:3000
+    environment:
+      - REDIS_HOST=matgip-redis
+    links:
+      - matgip-redis
